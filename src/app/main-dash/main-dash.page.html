@@ -45,18 +45,18 @@
     <h3>New Releases</h3>
     <swiper [slidesPerView]="1" [spaceBetween]="10" [navigation]="true" class="new-releases-slider">
       <ng-template swiperSlide *ngFor="let item of newReleases">
-        <div class="new-releases-slide" (click)="goToSearch(item.media.title || item.media.name)">
+        <div class="new-releases-slide" (click)="navigateToNewReleaseItem(item.media.id)">
           <img class="poster-image" 
                [src]="(item.media.manualInput && item.media.poster_image_src) ? item.media.poster_image_src : (screenWidth > 365 ? 'https://image.tmdb.org/t/p/w300/' + item.media.poster_path : 'https://image.tmdb.org/t/p/w342/' + item.media.poster_path) || 'assets/placeholder.png'" 
-               alt="{{ item.media.title || item.media.name }}" />
+               alt="{{ item.media.title || item.media.name }}"/>
           <div class="image-background" [style.backgroundImage]="'url(' + (item.media.backdrop_path ? 'https://image.tmdb.org/t/p/w1280/' + item.media.backdrop_path : 'assets/placeholder.png') + ')'">
             <div class="new-release-footer">
-              <a class="play-button" [routerLink]="['/player', { videoId: item.videoToPlayId }]" routerLinkActive="active">
-                <img src="assets/img/play.png"   alt="Play" />
+              <a class="play-button" [routerLink]="['/player/', { videoId: item.videoToPlayId }]" routerLinkActive="active">
+                <img src="assets/img/play.png" alt="Play" />
               </a>
               <div class="new-releases-description">
                 <h3>{{ item.media.title || item.media.name }} <span *ngIf="item.media.release_date || item.media.first_air_date">({{ (item.media.release_date || item.media.first_air_date).substring(0, 4) }})</span></h3>
-                <p>{{ item.description || item.media.overview }}</p>
+                <p>{{ item.description || item.media.overview }}</p> 
               </div>
             </div>
           </div>
@@ -70,10 +70,10 @@
     <p>Showing {{ continueWatching.length }} of 5</p>
     <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-continue-watching">
       <ng-template swiperSlide *ngFor="let item of continueWatching">
-        <div class="swiper-slide continue-watching-item" (click)="goToSearch(item.video.title || item.video.name)">
+        <div class="continue-watching-item" (click)="navigateToContinueWatchingItem(item.id)">
           <div class="poster-container">
             <img [src]="item.video.poster_path || 'assets/placeholder.png'" alt="{{ item.video.title || item.video.name }}" />
-            <a class="play-button" [routerLink]="['/player', { videoId: item.id }]" routerLinkActive="active">
+            <a class="play-button" [routerLink]="['/player/'+item.id ]" routerLinkActive="active">
               <img src="assets/img/play.png" alt="Play" />
             </a>
           </div>
@@ -93,7 +93,7 @@
     <h3>Recommendations</h3>
     <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-poster">
       <ng-template swiperSlide *ngFor="let item of recommendations">
-        <div class="swiper-slide" (click)="goToSearch(item.title || item.name)">
+        <div class="swiper-slide" (click)="navigateToRecomendations(item.id)">
           <img [src]="item.poster_path || 'assets/placeholder.png'" alt="{{ item.title || item.name }}" />
           <p>{{ item.title || item.name }}</p>
         </div>
@@ -105,7 +105,7 @@
     <h3>Newest Shows</h3>
     <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-poster">
       <ng-template swiperSlide *ngFor="let item of newestShows">
-        <div class="swiper-slide" (click)="goToSearch(item.name)">
+        <div class="swiper-slide" (click)="navigateToNewestShows(item.id)">
           <img [src]="item.poster_path || 'assets/placeholder.png'" alt="{{ item.name }}" />
           <p>{{ item.name }}</p>
         </div>
@@ -117,7 +117,7 @@
     <h3>Newest Movies</h3>
     <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-poster">
       <ng-template swiperSlide *ngFor="let item of newestMovies">
-        <div class="swiper-slide" (click)="goToSearch(item.title)">
+        <div class="swiper-slide" (click)="navigateToNewestMovies(item.id)">
           <img [src]="item.poster_path || 'assets/placeholder.png'" alt="{{ item.title }}" />
           <p>{{ item.title }}</p>
         </div>
@@ -129,7 +129,7 @@
     <h3>Newest Added Shows</h3>
     <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-poster">
       <ng-template swiperSlide *ngFor="let item of newestAddedShows">
-        <div class="swiper-slide" (click)="goToSearch(item.name)">
+        <div class="swiper-slide" (click)="navigateToNewestAddShows(item.id)">
           <img [src]="item.poster_path || 'assets/placeholder.png'" alt="{{ item.name }}" />
           <p>{{ item.name }}</p>
         </div>
@@ -141,7 +141,7 @@
     <h3>Newest Added Movies</h3>
     <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-poster">
       <ng-template swiperSlide *ngFor="let item of newestAddedMovies">
-        <div class="swiper-slide" (click)="goToSearch(item.title)">
+        <div class="swiper-slide" (click)="navigateToNewestAddMovies(item.id)">
           <img [src]="item.poster_path || 'assets/placeholder.png'" alt="{{ item.title }}" />
           <p>{{ item.title }}</p>
         </div>
@@ -153,7 +153,7 @@
     <h3>Discover Shows</h3>
     <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-poster">
       <ng-template swiperSlide *ngFor="let item of shows">
-        <div class="swiper-slide" (click)="goToSearch(item.name)">
+        <div class="swiper-slide" (click)="navigateToDiscoverShows(item.id)">
           <img [src]="item.poster_path || 'assets/placeholder.png'" alt="{{ item.name }}" />
           <p>{{ item.name }}</p>
         </div>
@@ -165,7 +165,7 @@
     <h3>Discover Movies</h3>
     <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-poster">
       <ng-template swiperSlide *ngFor="let item of movies">
-        <div class="swiper-slide" (click)="goToSearch(item.title)">
+        <div class="swiper-slide" (click)="navigateToDiscoverMovies(item.id)">
           <img [src]="item.poster_path || 'assets/placeholder.png'" alt="{{ item.title }}" />
           <p>{{ item.title }}</p>
         </div>

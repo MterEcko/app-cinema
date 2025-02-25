@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../core/api.service';
 import { Router } from '@angular/router';
-import { IonContent, IonSearchbar, IonGrid, IonRow, IonCol, IonCard } from '@ionic/angular/standalone'; // Importa los componentes Ionic necesarios
+import { IonContent, IonSearchbar, IonGrid, IonRow, IonCol, IonCard } from '@ionic/angular/standalone';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-movie',
   templateUrl: './movie.page.html',
   styleUrls: ['./movie.page.scss'],
-  standalone: true, // Asegúrate de que sea un componente standalone
-  imports: [IonContent, IonSearchbar, IonGrid, IonRow, IonCol, IonCard] // Importa los componentes Ionic necesarios
+  standalone: true,
+  imports: [IonContent, IonSearchbar, IonGrid, IonRow, IonCol, IonCard]
 })
 export class MoviePage implements OnInit {
   movies: any[] = [];
@@ -22,19 +23,20 @@ export class MoviePage implements OnInit {
     this.loadMovies();
   }
 
-  loadMovies() {
-    this.apiService.getMovies().subscribe((data: any) => {
+  async loadMovies() {
+    try {
+      const data = await firstValueFrom(this.apiService.getMovies());
       this.movies = data;
       this.filteredMovies = [...this.movies];
       if (this.movies.length > 0) {
         this.featuredBackdropUrl = this.movies[0].backdrop_path || this.movies[0].poster_path || 'assets/img/default-backdrop.jpg';
       }
-    }, (error) => {
+    } catch (error) {
       console.error('Error al cargar películas:', error);
       this.movies = [];
       this.filteredMovies = [];
       this.featuredBackdropUrl = 'assets/img/default-backdrop.jpg';
-    });
+    }
   }
 
   searchMovies() {
@@ -48,10 +50,10 @@ export class MoviePage implements OnInit {
   }
 
   viewMovieDetails(movie: any) {
-    console.log('Navegando a película con ID:', movie.id); // Depuración
-    this.router.navigate(['/main/movie', movie.id]).then(success => {
+    console.log('Navegando a película con ID:', movie.id);
+    this.router.navigate(['/main/dash/movie', movie.id]).then(success => {
       if (!success) {
-        console.error('Fallo al navegar a /main/movie/', movie.id);
+        console.error('Fallo al navegar a /main/dash/movie/', movie.id);
       }
     }).catch(error => {
       console.error('Error al navegar:', error);

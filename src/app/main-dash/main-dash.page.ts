@@ -259,6 +259,7 @@ export class MainDashPage implements OnInit {
     localStorage.removeItem('selectedProfile');
     this.router.navigate(['/setup']);
   }
+  
 
   // Método para redirigir a /search-results con un query
   goToSearch(query: string) {
@@ -274,5 +275,78 @@ export class MainDashPage implements OnInit {
       .catch(error => {
         console.error('Error en la navegación a /search-results:', error);
       });
+  }
+
+  navigateToNewReleaseItem(item: any) {
+    const media = item.media;
+    if (media.type === 'movie') {
+      this.router.navigate(['/main/dash/movie', media.id]);
+    } else if (media.type === 'tvShow') {
+      this.router.navigate(['/main/dash/show', media.id]);
+    }
+  }
+
+  navigateToRecomendations(item: any) {
+    const media = item.media;
+    if (media.type === 'movie') {
+      this.router.navigate(['/main/dash/movie', media.id]);
+    } else if (media.type === 'tvShow') {
+      this.router.navigate(['/main/dash/show', media.id]);
+    }
+  }
+
+  navigateToDiscoverMovies(item: any) {
+    const media = item.media;
+    if (media.type === 'movie') {
+      this.router.navigate(['/main/dash/movie', media.id]);
+    }
+  }
+
+  navigateToDiscoverShows(item: any) {
+    const media = item.media;
+    if (media.type === 'movie') {
+      this.router.navigate(['/main/dash/movie', media.id]);
+    }
+  }
+  
+
+  navigateToNewestShows(item: any) {
+    const media = item.media;
+    if (media.type === 'movie') {
+      this.router.navigate(['/main/dash/movie', media.id]);
+    }
+  }
+
+  navigateToNewestAddShows(item: any) {
+    const media = item.media;
+    if (media.type === 'movie') {
+      this.router.navigate(['/main/dash/movie', media.id]);
+    }
+  }
+
+  navigateToNewestMovies(item: any) {
+    const media = item.media;
+    if (media.type === 'movie') {
+      this.router.navigate(['/main/dash/movie', media.id]);
+    }
+  }
+
+  navigateToNewestAddMovies(item: any) {
+    const media = item.media;
+    if (media.type === 'movie') {
+      this.router.navigate(['/main/dash/movie', media.id]);
+    }
+  }
+
+  navigateToWatchList(item: any) {
+    const media = item.media;
+    if (media.type === 'movie') {
+      this.router.navigate(['/main/dash/show', media.id]);
+    }
+  }
+
+  
+  navigateToContinueWatchingItem(item: any) {
+    this.router.navigate(['/player', { videoId: item.id }]);
   }
 }

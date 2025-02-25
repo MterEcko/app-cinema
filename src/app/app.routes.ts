@@ -28,10 +28,26 @@ export const routes: Routes = [
   },
   {
     path: 'main/movie',
-    loadComponent: () => import('./movie/movie.page').then(m => m.MoviePage) // Usa MoviePage directamente como standalone
+    loadComponent: () => import('./movie/movie.page').then(m => m.MoviePage)
   },
   {
     path: 'main/dash/movie/:id',
     loadComponent: () => import('./movie-details/movie-details.page').then(m => m.MovieDetailsPage)
+  },
+  {
+    path: 'main/dash/show/:id',
+    loadComponent: () => import('./show-details/show-details.page').then(m => m.ShowDetailsPage)
+  },
+  {
+    path: 'player/:videoId',
+    loadComponent: () => import('./player/player.page').then(m => m.PlayerPage)
+  },
+  {
+    path: 'show-details',
+    loadComponent: () => import('./show-details/show-details.page').then( m => m.ShowDetailsPage)
+  },
+  {
+    path: 'player',
+    loadComponent: () => import('./player/player.page').then( m => m.PlayerPage)
   }
 ];
