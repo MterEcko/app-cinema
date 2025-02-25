@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Search Results for "{{ searchQuery || 'All Movies & Shows' }}"</ion-title>
+    <ion-button slot="end" (click)="cancelSearch()" fill="clear" color="light">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+  <ion-toolbar class="search-toolbar">
+    <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="onSearch()" placeholder="Search movies, shows, and more..." (ionCancel)="clearSearch()"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="search-results-content">
+  <div class="search-results-grid" *ngIf="searchResults.length; else noResults">
+    <h3>Search Results</h3>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" size-md="4" size-lg="3" *ngFor="let item of searchResults">
+          <div class="search-item" (click)="selectItem(item)" [class.selected]="selectedItem === item">
+            <div class="result-card" [style.backgroundImage]="'url(' + getPosterPath(item) + ')'">
+              <div class="media-info">
+                <h3 class="media-title">{{ getTitle(item) }}</h3>
+                <a class="play-button" [routerLink]="['/player/', { videoId: getVideoId(item) }]" routerLinkActive="active">
+                  <img src="assets/img/play.png" width="24px" alt="Play" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <ng-template #noResults>
+    <p class="ion-text-center ion-padding">No results found for "{{ searchQuery }}"</p>
+  </ng-template>
+</ion-content>

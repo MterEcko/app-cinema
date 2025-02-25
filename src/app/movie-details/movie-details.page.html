@@ -1,0 +1,15 @@
+<ion-content class="movie-details-background">
+  <ion-card *ngIf="movie; else noMovie">
+    <img [src]="movie.poster_path" alt="{{ movie.title }}" />
+    <ion-card-title>{{ movie.title }}</ion-card-title>
+    <ion-card-content>
+      <p>{{ movie.overview }}</p>
+      <ion-button (click)="addToWatchlist()">Añadir a lista</ion-button>
+      <ion-button (click)="removeFromWatchlist()">Eliminar de lista</ion-button>
+      <ion-button (click)="markAsUnviewed()">Marcar como no vista</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ng-template #noMovie>
+    <p class="no-movie-message">No se encontraron detalles de la película.</p>
+  </ng-template>
+</ion-content>

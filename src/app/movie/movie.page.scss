@@ -1,0 +1,64 @@
+.movies-background {
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)); // Usa una imagen predeterminada como fallback
+  
+    ion-searchbar {
+      --background: rgba(255, 255, 255, 0.9); 
+      margin: 10px;
+      --placeholder-color: #333;
+      --color: #000;
+    }
+  
+    ion-grid {
+      padding: 15px;
+  
+      ion-row {
+        margin: 0 -5px;
+      }
+  
+      ion-col {
+        padding: 5px;
+      }
+  
+      ion-card {
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+        overflow: hidden;
+  
+        img {
+          width: 100%;
+          height: 200px; // Ajusta según necesites para mantener proporciones
+          object-fit: cover;
+        }
+  
+        ion-card-title {
+          font-size: 16px;
+          margin: 10px 0;
+        }
+  
+        ion-button {
+          margin: 5px 0;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    ion-col {
+      size: 12; // Una columna por fila en pantallas pequeñas
+    }
+  
+    ion-card img {
+      height: 150px; // Tamaño más pequeño en pantallas pequeñas
+    }
+  }
+  
+  @media (max-width: 365px) {
+    ion-card img {
+      height: 120px; // Tamaño aún más pequeño en pantallas muy pequeñas
+    }
+  }

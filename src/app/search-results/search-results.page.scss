@@ -1,0 +1,112 @@
+.search-results-content {
+    --background: #1a1a1a; // Fondo oscuro como en la imagen de Prime Video
+    color: #fff; // Texto blanco
+  
+    h3 {
+      margin-top: 30px;
+      line-height: 28px;
+      font-size: 16px;
+      text-transform: uppercase;
+      color: #fff;
+    }
+  
+    .search-results-grid {
+      padding: 15px;
+  
+      ion-grid {
+        padding: 0;
+  
+        ion-row {
+          margin: 0 -5px; // Ajusta el margen para compensar el padding de las columnas
+        }
+  
+        ion-col {
+          padding: 5px; // Espacio entre las columnas
+        }
+  
+        .search-item {
+          margin: 0; // Sin margen adicional aquí, ya que ion-col lo maneja
+          padding: 0;
+          cursor: pointer;
+          transition: transform 0.3s ease; // Animación para agrandar
+  
+          &.selected,
+          &:hover {
+            transform: scale(1.05); // Efecto de agrandar al seleccionar o pasar el ratón
+          }
+  
+          .result-card {
+            background-size: cover;
+            background-position: center;
+            height: 250px; // Altura base para pantallas grandes (proporción 16:9 para backdrop_path)
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 10px;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+            overflow: hidden;
+  
+            @media (max-width: 768px) {
+              height: 150px; // Altura más pequeña para pantallas pequeñas
+            }
+  
+            @media (max-width: 365px) {
+              height: 120px; // Altura aún más pequeña para pantallas muy pequeñas
+            }
+          }
+  
+          .media-info {
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            height: 30%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+  
+            .media-title {
+              font-size: 14px;
+              margin: 0 0 5px 0;
+              text-transform: none;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              max-width: 100%;
+            }
+          }
+  
+          .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            cursor: pointer;
+  
+            img {
+              width: auto;
+              height: auto;
+              background: transparent;
+            }
+  
+            @media (max-width: 365px) {
+              img {
+                width: 18px; // Botón play más pequeño en pantallas pequeñas
+              }
+            }
+          }
+        }
+      }
+    }
+  
+    .search-toolbar {
+      --background: #524f4f; // Fondo oscuro para el buscador, coincide con el dashboard
+      --border-radius: 5px;
+      --placeholder-color: #999;
+      --color: #fff; // Texto blanco en el buscador
+    }
+  }

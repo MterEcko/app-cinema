@@ -1,0 +1,38 @@
+.movie-details-background {
+  --background: #1a1a1a;
+  color: white;
+
+  ion-card {
+    background: rgba(0, 0, 0, 0.8);
+    margin: 15px;
+    border-radius: 5px;
+
+    img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    ion-card-title {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    ion-card-content {
+      padding: 15px;
+    }
+
+    ion-button {
+      margin: 5px;
+    }
+  }
+
+  .no-movie-message {
+    text-align: center;
+    padding: 20px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    margin: 15px;
+    border-radius: 5px;
+  }
+}

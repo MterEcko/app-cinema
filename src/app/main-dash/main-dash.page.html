@@ -1,0 +1,175 @@
+<ion-menu side="start" menuId="mainMenu" contentId="mainContent">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item (click)="selectProfile(profile)" *ngFor="let profile of profiles">
+        <ion-label>{{ profile.profileName }}</ion-label>
+      </ion-item>
+      <ion-item (click)="goToManageProfiles()">
+        <ion-label>Manage Profiles</ion-label>
+      </ion-item>
+      <ion-item (click)="selectGenre(genre)" *ngFor="let genre of genres">
+        <ion-label>{{ genre.name }}</ion-label>
+      </ion-item>
+      <ion-item (click)="logout()">
+        <ion-label>Logout</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-menu-button slot="start"></ion-menu-button>
+    <ion-title>Dashboard</ion-title>
+    <div slot="end" class="header-actions">
+      <div class="current-profile-icon">
+        <div class="avatar-in-header" [style.backgroundColor]="'#' + (selectedProfile?.avatarColor || '0b74b2')">
+          <img src="assets/streama-profile-smiley.png" alt="">
+        </div>
+        <span>{{ selectedProfile?.profileName || 'Selecciona un perfil' }}</span>
+      </div>
+      <ion-button class="search-button" (click)="goToSearch('')" fill="clear" color="light">
+        <img src="assets/img/find.png" width="24px" max-width="24px" alt="Search" />
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+<ion-content id="mainContent" class="ion-padding dashboard">
+  <!-- Contenido de los sliders, ajustado para redirigir a /search-results -->
+  <div class="new-releases-slider" *ngIf="newReleases.length">
+    <h3>New Releases</h3>
+    <swiper [slidesPerView]="1" [spaceBetween]="10" [navigation]="true" class="new-releases-slider">
+      <ng-template swiperSlide *ngFor="let item of newReleases">
+        <div class="new-releases-slide" (click)="goToSearch(item.media.title || item.media.name)">
+          <img class="poster-image" 
+               [src]="(item.media.manualInput && item.media.poster_image_src) ? item.media.poster_image_src : (screenWidth > 365 ? 'https://image.tmdb.org/t/p/w300/' + item.media.poster_path : 'https://image.tmdb.org/t/p/w342/' + item.media.poster_path) || 'assets/placeholder.png'" 
+               alt="{{ item.media.title || item.media.name }}" />
+          <div class="image-background" [style.backgroundImage]="'url(' + (item.media.backdrop_path ? 'https://image.tmdb.org/t/p/w1280/' + item.media.backdrop_path : 'assets/placeholder.png') + ')'">
+            <div class="new-release-footer">
+              <a class="play-button" [routerLink]="['/player', { videoId: item.videoToPlayId }]" routerLinkActive="active">
+                <img src="assets/img/play.png"   alt="Play" />
+              </a>
+              <div class="new-releases-description">
+                <h3>{{ item.media.title || item.media.name }} <span *ngIf="item.media.release_date || item.media.first_air_date">({{ (item.media.release_date || item.media.first_air_date).substring(0, 4) }})</span></h3>
+                <p>{{ item.description || item.media.overview }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
+
+  <div class="continue-watching-slider" *ngIf="continueWatching.length">
+    <h3>Continue Watching</h3>
+    <p>Showing {{ continueWatching.length }} of 5</p>
+    <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-continue-watching">
+      <ng-template swiperSlide *ngFor="let item of continueWatching">
+        <div class="swiper-slide continue-watching-item" (click)="goToSearch(item.video.title || item.video.name)">
+          <div class="poster-container">
+            <img [src]="item.video.poster_path || 'assets/placeholder.png'" alt="{{ item.video.title || item.video.name }}" />
+            <a class="play-button" [routerLink]="['/player', { videoId: item.id }]" routerLinkActive="active">
+              <img src="assets/img/play.png" alt="Play" />
+            </a>
+          </div>
+          <div class="media-info">
+            <h3 class="media-title">{{ (item.video.episodeString || "") + " " + (item.video.title || item.video.name) }}</h3>
+            <p>{{ formatTime(item.currentPlayTime) }}</p>
+            <div class="media-progress" *ngIf="item.runtime">
+              <div class="progress-inner" [style.width]="(item.currentPlayTime / item.runtime * 100) + '%'"></div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
+
+  <div *ngIf="recommendations.length">
+    <h3>Recommendations</h3>
+    <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-poster">
+      <ng-template swiperSlide *ngFor="let item of recommendations">
+        <div class="swiper-slide" (click)="goToSearch(item.title || item.name)">
+          <img [src]="item.poster_path || 'assets/placeholder.png'" alt="{{ item.title || item.name }}" />
+          <p>{{ item.title || item.name }}</p>
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
+
+  <div *ngIf="newestShows.length">
+    <h3>Newest Shows</h3>
+    <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-poster">
+      <ng-template swiperSlide *ngFor="let item of newestShows">
+        <div class="swiper-slide" (click)="goToSearch(item.name)">
+          <img [src]="item.poster_path || 'assets/placeholder.png'" alt="{{ item.name }}" />
+          <p>{{ item.name }}</p>
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
+
+  <div *ngIf="newestMovies.length">
+    <h3>Newest Movies</h3>
+    <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-poster">
+      <ng-template swiperSlide *ngFor="let item of newestMovies">
+        <div class="swiper-slide" (click)="goToSearch(item.title)">
+          <img [src]="item.poster_path || 'assets/placeholder.png'" alt="{{ item.title }}" />
+          <p>{{ item.title }}</p>
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
+
+  <div *ngIf="newestAddedShows.length">
+    <h3>Newest Added Shows</h3>
+    <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-poster">
+      <ng-template swiperSlide *ngFor="let item of newestAddedShows">
+        <div class="swiper-slide" (click)="goToSearch(item.name)">
+          <img [src]="item.poster_path || 'assets/placeholder.png'" alt="{{ item.name }}" />
+          <p>{{ item.name }}</p>
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
+
+  <div *ngIf="newestAddedMovies.length">
+    <h3>Newest Added Movies</h3>
+    <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-poster">
+      <ng-template swiperSlide *ngFor="let item of newestAddedMovies">
+        <div class="swiper-slide" (click)="goToSearch(item.title)">
+          <img [src]="item.poster_path || 'assets/placeholder.png'" alt="{{ item.title }}" />
+          <p>{{ item.title }}</p>
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
+
+  <div *ngIf="shows.length">
+    <h3>Discover Shows</h3>
+    <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-poster">
+      <ng-template swiperSlide *ngFor="let item of shows">
+        <div class="swiper-slide" (click)="goToSearch(item.name)">
+          <img [src]="item.poster_path || 'assets/placeholder.png'" alt="{{ item.name }}" />
+          <p>{{ item.name }}</p>
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
+
+  <div *ngIf="movies.length">
+    <h3>Discover Movies</h3>
+    <swiper [slidesPerView]="getSlidesPerView()" [spaceBetween]="5" [navigation]="true" class="ion-slides-poster">
+      <ng-template swiperSlide *ngFor="let item of movies">
+        <div class="swiper-slide" (click)="goToSearch(item.title)">
+          <img [src]="item.poster_path || 'assets/placeholder.png'" alt="{{ item.title }}" />
+          <p>{{ item.title }}</p>
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
+</ion-content>

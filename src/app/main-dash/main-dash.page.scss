@@ -1,0 +1,369 @@
+ion-content {
+  --background: #524f4f !important; // Fondo gris oscuro, coincide con main-dash
+  color: #fff;
+}
+
+ion-header {
+  --background: #524f4f !important; // Fondo gris oscuro, coincide con main-dash
+  color: #fff;
+}
+
+ion-toolbar {
+  --background: #524f4f !important; // Fondo gris oscuro, coincide con main-dash
+  color: #fff;
+}
+
+ion-list {
+  --background: #524f4f !important; // Fondo gris oscuro, coincide con main-dash
+  color: #fff;
+}
+
+ion-item {
+  --background: #524f4f !important; // Fondo gris oscuro, coincide con main-dash
+  color: #fff;
+}
+
+ion-label {
+  --background: #524f4f !important; // Fondo gris oscuro, coincide con main-dash
+  color: #fff;
+}
+
+.dashboard {
+  padding: 15px;
+  background-color: #524f4f; // Fondo gris oscuro para toda la página
+  color: #fff; // Texto blanco por defecto para todo el contenido
+
+  h3 {
+    margin-top: 30px;
+    line-height: 28px;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #fff; // Títulos blancos
+  }
+
+  .ion-slides-poster {
+    height: auto;
+
+    .swiper-slide {
+      width: 210px;
+      text-align: center;
+    }
+
+    img {
+      width: 210px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    p {
+      font-size: 14px;
+      margin: 5px 0;
+      color: #fff; // Textos en sliders blancos
+    }
+  }
+
+  .ion-slides-continue-watching {
+    height: auto;
+
+    .swiper-slide {
+      width: 210px;
+      text-align: center;
+    }
+
+    .continue-watching-item {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #1a1a1a; // Mantiene el fondo oscuro del item
+      border-radius: 5px;
+      overflow: hidden;
+
+      .poster-container {
+        height: 70%; /* Ajusta la altura del póster */
+      }
+
+      img {
+        width: 210px;
+        height: auto;
+        object-fit: contain;
+        z-index: 1;
+      }
+
+      .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        cursor: pointer;
+
+        img {
+          width: 64px;
+          height: auto;
+          background: transparent;
+        }
+      }
+
+      .media-info {
+        padding: 10px;
+        text-align: center;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        height: 30%; /* 30% para el texto y progreso */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .media-title {
+          font-size: 16px;
+          color: #fff; // Títulos en media-info blancos
+          margin: 0 0 5px 0;
+          text-transform: none;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap; /* Trunca el texto en una línea */
+          max-width: 100%;
+        }
+
+        p {
+          font-size: 14px;
+          color: #fff; // Textos en media-info blancos
+          margin: 0 0 5px 0;
+        }
+      }
+
+      .media-progress {
+        width: 100%;
+        height: 5px;
+        background: #444;
+        margin: 5px 0;
+
+        .progress-inner {
+          height: 100%;
+          background: #ff0000;
+        }
+      }
+    }
+  }
+
+  .new-releases-slider {
+    height: 350px;
+    width: 100%;
+
+    .new-releases-slide {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+
+      .poster-image {
+        width: 342px;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+      }
+
+      .image-background {
+        background-size: cover;
+        background-position: 50% 0%;
+        position: relative;
+        z-index: 0;
+        flex: 1;
+      }
+
+      .new-release-footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 16px;
+        background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.71) 20%);
+        color: #fff; // Texto blanco en New Releases
+        z-index: 2;
+        display: flex;
+        align-items: center;
+
+        .play-button {
+          margin-right: 10px;
+          cursor: pointer;
+
+          img {
+            width: 150px;
+            height: auto;
+            background: transparent;
+          }
+        }
+
+        .new-releases-description {
+          max-width: 100%;
+          text-align: left;
+          flex: 1;
+
+          h3 {
+            font-size: 18px;
+            text-transform: none;
+            margin: 0 0 5px 0;
+            color: #fff; // Títulos blancos
+          }
+
+          p {
+            font-size: 14px;
+            line-height: 1.3em;
+            color: #fff; // Textos blancos
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+
+  /* Media query para pantallas menores a 365px */
+  @media (max-width: 365px) {
+
+    .header-actions .search-button img {
+      width: 20px !important; // Tamaño más pequeño en pantallas pequeñas
+      height: 20px !important;
+    }
+
+
+    .new-releases-slider {
+      .new-releases-slide {
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        .poster-image {
+          width: auto;
+          height: auto;
+          max-width: 100%;
+          object-fit: contain;
+        }
+
+        .image-background {
+          display: none;
+        }
+
+        .new-release-footer {
+          position: relative;
+          background: rgba(0, 0, 0, 0.71);
+          width: 100%;
+          text-align: center;
+        }
+      }
+    }
+
+    .ion-slides-continue-watching {
+      .swiper-slide {
+        width: auto;
+        max-width: 100%;
+      }
+
+      .continue-watching-item {
+        width: 100%;
+        max-width: 100%;
+        height: 315px;
+
+        img {
+          max-width: 100%;
+          height: auto;
+          object-fit: contain;
+        }
+
+        .media-info {
+          width: 100%;
+        }
+      }
+    }
+
+    .ion-slides-poster {
+      .swiper-slide {
+        width: auto;
+        max-width: 100%;
+      }
+
+      img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 80%;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .profile-item-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .avatar-in-header {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avatar-in-header img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .current-profile-icon {
+    display: flex;
+    align-items: center;
+
+    span {
+      font-size: 16px;
+      color: #fff; // Texto blanco para el nombre del perfil
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  
+    .search-button {
+      --padding-start: 0 !important;
+      --padding-end: 0 !important;
+      --border-radius: 0 !important;
+  
+      img {
+        width: 24px !important;
+        height: 24px !important;
+        object-fit: contain !important;
+        background: transparent !important;
+        vertical-align: middle !important;
+      }
+    }
+  }
+
+  .search-toolbar {
+    --background: #524f4f; // Fondo oscuro para el buscador, coincide con el dashboard
+    --border-radius: 5px;
+    --placeholder-color: #999;
+    --color: #fff; // Texto blanco en el buscador
+  }
+
+  .active-darkgrey {
+    background-color: #444;
+    color: white;
+  }
+
+  .item-divider {
+    font-weight: bold;
+    background-color: #524f4f; // Fondo gris oscuro para los divisores en el menú
+    color: #fff; // Texto blanco en los divisores
+  }
+
+  ion-menu {
+    --width: 250px;
+    --background: #524f4f; // Fondo gris oscuro para el menú
+    --color: #fff; // Texto blanco en el menú
+  }
+}
